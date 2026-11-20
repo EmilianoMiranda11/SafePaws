@@ -1,0 +1,37 @@
+﻿node_modules/
+.env
+.env.*
+!.env.example
+dist/
+build/
+coverage/
+*.log
+.DS_Store
+Thumbs.db
+secrets/
+backups/
+
+# Docker images and archives
+*.tar
+*.tar.gz
+*.tgz
+
+# Environment and credentials
+.env
+.env.*
+!.env.example
+
+# Kubernetes local configuration
+.kube/
+kubeconfig*
+
+# Private keys and certificates
+*.pem
+*.key
+*.p12
+*.pfx
+
+# IDE and operating system
+.vscode/
+.idea/
+*.swp

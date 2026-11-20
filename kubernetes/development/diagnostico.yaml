@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: diagnostico-backend
+  namespace: safepaws-dev
+spec:
+  restartPolicy: Never
+  containers:
+    - name: diagnostico
+      image: safepaws-backend:latest
+      imagePullPolicy: IfNotPresent
+      command: ["sleep", "3600"]
+      envFrom:
+        - configMapRef:
+            name: safepaws-config
+        - secretRef:
+            name: safepaws-secret

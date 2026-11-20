@@ -1,0 +1,59 @@
+
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: worker
+  namespace: safepaws-dev
+  labels:
+    app: worker
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: worker
+
+  template:
+    metadata:
+      labels:
+        app: worker
+
+    spec:
+      terminationGracePeriodSeconds: 90
+
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+
+      containers:
+        - name: worker
+          image: safepaws-backend:latest
+          imagePullPolicy: IfNotPresent
+
+          command: ["npm", "run", "worker"]
+
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+
+          envFrom:
+            - configMapRef:
+                name: safepaws-config
+            - secretRef:
+                name: safepaws-secret
+
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+
+            limits:
+              cpu: 500m
+              memory: 512Mi
